@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const {_isValidContact} = require('../helpers/index');
 const UserModel = require("../models/User");
 const EmergencyContact = mongoose.model("EmergencyContact");
+const EmergencyContactModel = require("../models/EmergencyContact");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { bool, boolean } = require('@hapi/joi');
@@ -14,9 +15,9 @@ exports.create = async data => {
     if (error) {
         throw new Error(error.details[0].message);
     }
-    return await EmergencyContact.find({'email' : data.email, user: id})
+    return await EmergencyContact.findOne({'email' : data.email, user: data.user})
         .then(contact => {
-          if(contact) throw new Error('El contacto ya existe');
+          if(contact) throw new Error('El usuario ya existe');
           else{
             if(data.profilepicture != ""){
                 picture = data.profilepicture
@@ -33,7 +34,6 @@ exports.create = async data => {
                 relation: data.relation,
                 profilePictureUrl: picture
             };
-
             return EmergencyContact.create(newContact);
           }
         })
@@ -80,7 +80,7 @@ exports.update = async (id, data) => {
 
 exports.delete = async id => {
   try {
-    return await EmergencyContact.findByIdAndRemove(id);
+    await EmergencyContact.findByIdAndRemove(id);
   } catch (err) {
     throw err;
   }

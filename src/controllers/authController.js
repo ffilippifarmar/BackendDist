@@ -7,8 +7,9 @@ const jwt = require("jsonwebtoken");
 const TokenModel = require("../models/Token");
 const Joi = require('@hapi/joi');
 const crypto = require("crypto");
-//const sendEmail = require("../utils/sendMail");
 const User = require('../models/User');
+const sendMail  = require('../utils/sendMail');
+
 
 module.exports.signup = function (req, res){
     const userObj = req.body
@@ -111,17 +112,19 @@ module.exports.sendPasswordReset =  async (req, res) => {
         const user = await UserDAO.findUserByEmail(req.body.email );
         if (!user)
             return res.status(400).send("user with given email doesn't exist");
-
-        let token = await TokenModel.findOne({ userId: user._id });
-        if (!token) {
+        console.log(user)
+        console.log("_____")
+        let token = await TokenModel.findOne({ userId: user.user._id });
+        console.log(token)
+        if (token == null) {
+            console.log(user._id)
             token = await new TokenModel({
-                userId: user._id,
+                userId: user.user._id,
                 token: crypto.randomBytes(32).toString("hex"),
             }).save();
         }
-
         const link = `${process.env.BASE_URL}/password-reset/${user._id}/${token.token}`;
-        await sendEmail(user.email, "Password reset", link);
+        await sendMail(user.email, "Password reset", link);
 
         res.send("password reset link sent to your email account");
     } catch (error) {

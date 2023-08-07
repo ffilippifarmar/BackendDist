@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-
+const Schema = mongoose.Schema; 
+const User = require('../models/User');
 
 const ContactEmergencySchrema = mongoose.Schema({
     user:{
@@ -44,6 +45,5 @@ ContactEmergencySchrema.set("toJSON", {
     }
 });
 
-
-  module.exports = mongoose.model('EmergencyContact', ContactEmergencySchrema,"emergencyContacts");
+module.exports = mongoose.model('EmergencyContact', ContactEmergencySchrema);
   

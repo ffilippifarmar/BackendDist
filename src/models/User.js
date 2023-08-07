@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const {_isValidRegister} = require('../helpers/index');
+const Schema = mongoose.Schema; 
 
 const jwt = require('jsonwebtoken');
 const { bool, boolean } = require('@hapi/joi');
@@ -33,6 +34,7 @@ const UserSchrema = mongoose.Schema({
     role: {
         type: String,
         default: "user",
+        enum: ["user","system"]
     },
     profilePictureUrl:  {
         type: String,
@@ -48,5 +50,5 @@ UserSchrema.set("toJSON", {
 });
 
 
-  module.exports = mongoose.model('User', UserSchrema,"users");
+  module.exports = mongoose.model('User', UserSchrema);
   

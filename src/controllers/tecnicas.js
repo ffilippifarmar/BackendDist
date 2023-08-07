@@ -61,7 +61,7 @@ exports.update = async (req, res, next) => {
 
 exports.delete = async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const { id } = req.body;
 
     const userDeleted = await UserDAO.delete(id);
 

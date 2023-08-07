@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const {_isValidRegister} = require('../helpers/index');
-const UserModel = require("../models/User");
-const User = mongoose.model("User");
+const EmergencyContact = require("../models/EmergencyContact");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { bool, boolean } = require('@hapi/joi');
-
+const UserModel = require("../models/User");
+const User = mongoose.model("User");
 
 exports.create = async data => {
     const { error } = _isValidRegister(data);
@@ -145,7 +145,8 @@ exports.login = async (userInfo) => {
 
             const userObject = {
                 _id: user._id,
-                email: user.email
+                email: user.email,
+                role: user.role
             }
             
             let data = {}
