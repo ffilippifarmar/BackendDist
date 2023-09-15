@@ -4,8 +4,8 @@ const userController = require('../controllers/userController');
 const { isAuthenticated } = require('../middlewares/index');
 
 
-router.post("/favorites", isAuthenticated, userController.addfavorites);
-router.get('/favorites', isAuthenticated, userController.getfavorites);
-router.get('/favorites/:id',isAuthenticated,userController.checkFavorites)
+router.post("/contacts", isAuthenticated, userController.addContactEmergency);
+router.get('/contacts', isAuthenticated, userController.getfavorites);
+router.get('/contacts/:id',isAuthenticated,userController.checkFavorites)
 
 module.exports = router;
