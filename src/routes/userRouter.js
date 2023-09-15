@@ -5,7 +5,7 @@ const { isAuthenticated } = require('../middlewares/index');
 
 
 router.post("/contacts", isAuthenticated, userController.addContactEmergency);
-router.get('/contacts', isAuthenticated, userController.getfavorites);
+router.get('/contacts', isAuthenticated, userController.getContactsEmergency);
 router.get('/contacts/:id',isAuthenticated,userController.checkFavorites)
 
 module.exports = router;
